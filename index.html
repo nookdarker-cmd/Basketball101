@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>บาสเกตบอล 101 — รู้จักกีฬาบาสเกตบอลเบื้องต้น</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏀</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: light;
+    --bg:#F1E4C9;
+    --bg-alt:#E7D6AE;
+    --surface:#FFFCF5;
+    --ink:#17263D;
+    --ink-soft:#4A5A72;
+    --accent:#EA6A12;
+    --accent-deep:#C6540A;
+    --accent-tint:#FBDDC0;
+    --line:#C7A874;
+    --danger:#A62639;
+    --danger-tint:#F2D3D6;
+    --radius:3px;
+    --maxw:1140px;
+    --nav-h:60px;
+    --tab-h:64px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0E1928;
+      --bg-alt:#142236;
+      --surface:#16273D;
+      --ink:#F2E7CE;
+      --ink-soft:#B9C6D8;
+      --accent:#FF8A3D;
+      --accent-deep:#FFB07A;
+      --accent-tint:#3A2A1C;
+      --line:#2D4059;
+      --danger:#E2596B;
+      --danger-tint:#3A2028;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --bg:#0E1928;
+    --bg-alt:#142236;
+    --surface:#16273D;
+    --ink:#F2E7CE;
+    --ink-soft:#B9C6D8;
+    --accent:#FF8A3D;
+    --accent-deep:#FFB07A;
+    --accent-tint:#3A2A1C;
+    --line:#2D4059;
+    --danger:#E2596B;
+    --danger-tint:#3A2028;
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{
+    scroll-padding-top: calc(var(--nav-h) + var(--tab-h) + env(safe-area-inset-top,0px));
+  }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans Thai', system-ui, sans-serif;
+    font-size:16.5px;
+    line-height:1.75;
+    padding-top: env(safe-area-inset-top,0px);
+    padding-bottom: env(safe-area-inset-bottom,0px);
+    -webkit-font-smoothing:antialiased;
+    transition:background .25s ease, color .25s ease;
+  }
+  h1,h2,h3,h4{
+    font-family:'Kanit', 'Noto Sans Thai', sans-serif;
+    line-height:1.25;
+    margin:0 0 .5em;
+    font-weight:700;
+  }
+  h1{ font-size:clamp(2rem, 4.6vw, 3.1rem); font-weight:800; letter-spacing:-.01em; }
+  h2{ font-size:clamp(1.5rem, 3vw, 2rem); }
+  h3{ font-size:1.2rem; }
+  p{ margin:0 0 1em; color:var(--ink-soft); max-width:62ch; }
+  a{ color:var(--accent-deep); }
+  ul{ margin:0; padding:0; list-style:none; }
+  button{ font-family:inherit; }
+  img,svg{ display:block; max-width:100%; }
+  :focus-visible{ outline:3px solid var(--accent); outline-offset:2px; }
+
+  .icon{ width:1.4em; height:1.4em; stroke:currentColor; fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; }
+  .icon.filled{ fill:currentColor; }
+
+  /* ---------- top bar & tabs ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:40;
+    height:var(--nav-h);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 clamp(16px,4vw,32px);
+    background:var(--surface);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{ display:flex; align-items:center; gap:.55em; font-family:'Kanit',sans-serif; font-weight:700; font-size:1.05rem; color:var(--ink); }
+  .brand .icon{ color:var(--accent); width:1.7em; height:1.7em; }
+  .brand small{ display:block; font-family:'Noto Sans Thai'; font-weight:400; font-size:.7em; color:var(--ink-soft); }
+
+  #theme-toggle{
+    display:flex; align-items:center; justify-content:center;
+    width:38px; height:38px; border-radius:50%;
+    border:1px solid var(--line); background:var(--bg-alt); color:var(--ink);
+    cursor:pointer;
+  }
+  #theme-toggle .icon{ width:1.2em; height:1.2em; }
+  #theme-toggle .moon{ display:none; }
+  :root[data-theme="dark"] #theme-toggle .sun{ display:none; }
+  :root[data-theme="dark"] #theme-toggle .moon{ display:block; }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]) #theme-toggle .sun{ display:none; }
+    :root:not([data-theme="light"]) #theme-toggle .moon{ display:block; }
+  }
+
+  .tabbar{
+    position:sticky; top:var(--nav-h); z-index:39;
+    display:flex; gap:4px;
+    background:var(--bg-alt);
+    border-bottom:1px solid var(--line);
+    padding:0 clamp(10px,4vw,28px);
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .tabbar::-webkit-scrollbar{ display:none; }
+  .tab{
+    appearance:none; border:none; background:transparent; color:var(--ink-soft);
+    cursor:pointer; white-space:nowrap;
+    display:flex; align-items:center; gap:.5em;
+    padding:14px 14px 12px;
+    font-size:.92rem; font-weight:600;
+    border-bottom:3px solid transparent;
+  }
+  .tab .icon{ width:1.15em; height:1.15em; }
+  .tab.active{ color:var(--accent-deep); border-bottom-color:var(--accent); }
+  .tab .tab-label-full{ display:inline; }
+  .tab .tab-label-short{ display:none; }
+
+  main{ max-width:var(--maxw); margin:0 auto; padding:clamp(28px,5vw,56px) clamp(16px,4vw,32px) 80px; }
+  .page{ display:none; }
+  .page.active{ display:block; animation:pagein .35s ease both; }
+  @keyframes pagein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  footer{
+    border-top:1px solid var(--line); background:var(--bg-alt);
+    text-align:center; padding:22px 16px; font-size:.85rem; color:var(--ink-soft);
+  }
+
+  /* ---------- hero (home) ---------- */
+  .hero{ display:grid; grid-template-columns:1.1fr 1fr; gap:clamp(24px,5vw,56px); align-items:center; }
+  .hero-copy .eyebrow{ display:none; }
+  .hero-copy p{ font-size:1.08rem; }
+  .hero-actions{ display:flex; flex-wrap:wrap; gap:12px; margin-top:1.5em; }
+  .btn{
+    display:inline-flex; align-items:center; gap:.5em;
+    padding:.85em 1.4em; border-radius:var(--radius);
+    font-weight:600; font-size:.98rem; cursor:pointer; border:2px solid transparent;
+    font-family:'Kanit',sans-serif;
+  }
+  .btn-primary{ background:var(--accent); color:#fff; }
+  .btn-primary:hover{ background:var(--accent-deep); }
+  .btn-ghost{ background:transparent; border-color:var(--ink); color:var(--ink); }
+  .btn-ghost:hover{ background:var(--ink); color:var(--bg); }
+
+  .hero-art{ position:relative; }
+  .hero-ball{ transform-box:fill-box; transform-origin:center; transform:translate(60px,300px) scale(1); animation:shotArc 1.7s cubic-bezier(.32,.72,.35,1) .35s 1 both; }
+  @keyframes shotArc{
+    0%{ transform:translate(58px,296px) scale(1) rotate(0deg); }
+    58%{ transform:translate(226px,86px) scale(.92) rotate(160deg); }
+    82%{ transform:translate(300px,150px) scale(.74) rotate(230deg); }
+    100%{ transform:translate(300px,197px) scale(.6) rotate(250deg); }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .hero-ball{ animation:none; transform:translate(300px,197px) scale(.6) rotate(250deg); }
+  }
+
+  .stat-strip{
+    margin-top:clamp(32px,6vw,56px);
+    display:grid; grid-template-columns:repeat(4,1fr);
+    border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+  }
+  .stat-strip div{ padding:20px 12px; text-align:center; background:var(--surface); border-right:1px solid var(--line); }
+  .stat-strip div:last-child{ border-right:none; }
+  .stat-num{ font-family:'Kanit',sans-serif; font-weight:800; font-size:clamp(1.5rem,4vw,2.1rem); color:var(--accent-deep); display:block; }
+  .stat-label{ font-size:.8rem; color:var(--ink-soft); }
+
+  .section-head{ max-width:68ch; margin-bottom:clamp(24px,4vw,36px); }
+  .section-head h2{ margin-bottom:.3em; }
+
+  /* ---------- timeline (history) ---------- */
+  .timeline{ position:relative; padding-left:34px; border-left:2px dashed var(--line); display:flex; flex-direction:column; gap:28px; }
+  .timeline-item{ position:relative; }
+  .timeline-item::before{
+    content:""; position:absolute; left:-42px; top:2px; width:16px; height:16px;
+    background:var(--accent); border-radius:50%; border:3px solid var(--bg);
+    box-shadow:0 0 0 2px var(--accent);
+  }
+  .timeline-year{ font-family:'Kanit',sans-serif; font-weight:700; color:var(--accent-deep); font-size:1.05rem; }
+  .timeline-item h3{ margin:.1em 0 .25em; }
+  .timeline-item p{ margin:0; }
+
+  /* ---------- cards ---------- */
+  .card-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+  .card{
+    background:var(--surface); border:1px solid var(--line);
+    padding:20px 20px 22px;
+    clip-path:polygon(0 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%);
+  }
+  .card .icon-badge{
+    width:46px; height:46px; border-radius:50%; background:var(--accent-tint);
+    display:flex; align-items:center; justify-content:center; color:var(--accent-deep);
+    margin-bottom:14px;
+  }
+  .card.danger .icon-badge{ background:var(--danger-tint); color:var(--danger); }
+  .card h3{ margin-bottom:.35em; }
+  .card p{ margin:0; font-size:.94rem; }
+
+  /* ---------- court diagram (equipment) ---------- */
+  .diagram-wrap{ display:grid; grid-template-columns:1.2fr 1fr; gap:clamp(20px,4vw,40px); align-items:center; margin:clamp(24px,4vw,36px) 0 clamp(40px,6vw,60px); }
+  .diagram-legend{ display:flex; flex-direction:column; gap:12px; }
+  .legend-item{ display:flex; gap:12px; align-items:flex-start; }
+  .legend-num{
+    flex-shrink:0; width:26px; height:26px; border-radius:50%; background:var(--ink); color:var(--bg);
+    font-family:'Kanit',sans-serif; font-weight:700; font-size:.8rem;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .legend-item strong{ display:block; font-size:.95rem; }
+  .legend-item span{ font-size:.86rem; color:var(--ink-soft); }
+
+  .court-num{ fill:var(--bg); }
+  .court-num-bg{ fill:var(--ink); }
+
+  .position-wrap{ display:grid; grid-template-columns:1fr 1.15fr; gap:clamp(20px,4vw,40px); align-items:center; }
+  .position-list{ display:flex; flex-direction:column; gap:14px; }
+  .position-list li{ display:flex; gap:12px; align-items:flex-start; }
+  .pos-badge{
+    flex-shrink:0; width:34px; height:34px; border-radius:50%; background:var(--accent);
+    color:#fff; font-family:'Kanit',sans-serif; font-weight:700; font-size:.72rem;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .position-list strong{ display:block; font-size:.95rem; }
+  .position-list span{ font-size:.86rem; color:var(--ink-soft); }
+
+  /* ---------- rules page ---------- */
+  .rule-block{ margin-bottom:clamp(36px,6vw,56px); }
+  .score-table{ width:100%; border-collapse:collapse; max-width:520px; }
+  .score-table td,.score-table th{ padding:12px 14px; border-bottom:1px solid var(--line); text-align:left; font-size:.95rem; }
+  .score-table th{ font-family:'Kanit',sans-serif; color:var(--ink-soft); font-weight:600; font-size:.82rem; }
+  .score-table td:last-child, .score-table th:last-child{ text-align:right; font-family:'Kanit',sans-serif; font-weight:700; color:var(--accent-deep); }
+
+  /* ---------- about ---------- */
+  .about-card{
+    max-width:560px; border:2px dashed var(--line); border-radius:var(--radius);
+    padding:clamp(28px,5vw,44px); background:var(--surface);
+  }
+  .about-field{ margin-bottom:18px; }
+  .about-field label{ display:block; font-size:.8rem; color:var(--ink-soft); margin-bottom:4px; font-family:'Kanit',sans-serif; }
+  .about-field .blank{ border-bottom:1px dashed var(--ink-soft); min-height:1.6em; }
+  .about-note{ display:flex; gap:10px; align-items:flex-start; margin-top:24px; padding:14px 16px; background:var(--bg-alt); border-radius:var(--radius); font-size:.86rem; color:var(--ink-soft); }
+  .about-note .icon{ color:var(--accent-deep); margin-top:2px; }
+
+  /* ---------- bottom fixed tabbar on mobile ---------- */
+  @media (max-width:760px){
+    .hero{ grid-template-columns:1fr; }
+    .hero-art{ order:-1; max-width:320px; margin:0 auto; }
+    .stat-strip{ grid-template-columns:repeat(2,1fr); }
+    .stat-strip div:nth-child(2){ border-right:none; }
+    .diagram-wrap, .position-wrap{ grid-template-columns:1fr; }
+    .position-wrap .position-art{ order:-1; max-width:280px; margin:0 auto; }
+
+    .tabbar{
+      position:fixed; top:auto; bottom:0; left:0; right:0;
+      height:calc(var(--tab-h) + env(safe-area-inset-bottom,0px));
+      padding-bottom:env(safe-area-inset-bottom,0px);
+      justify-content:space-between; gap:0;
+    }
+    .tab{
+      flex-direction:column; gap:2px; flex:1; padding:9px 2px 8px;
+      border-bottom:none; border-top:3px solid transparent; font-size:.66rem;
+    }
+    .tab.active{ border-top-color:var(--accent); border-bottom-color:transparent; }
+    .tab .tab-label-full{ display:none; }
+    .tab .tab-label-short{ display:inline; }
+    main{ padding-bottom:calc(var(--tab-h) + 40px + env(safe-area-inset-bottom,0px)); }
+  }
+</style>
+</head>
+<body>
+
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<defs>
+  <symbol id="i-ball" viewBox="0 0 48 48">
+    <circle cx="24" cy="24" r="18"/>
+    <line x1="24" y1="6" x2="24" y2="42"/>
+    <line x1="6" y1="24" x2="42" y2="24"/>
+    <path d="M9 13 C17 21 31 21 39 13"/>
+    <path d="M9 35 C17 27 31 27 39 35"/>
+  </symbol>
+  <symbol id="i-clock" viewBox="0 0 48 48">
+    <circle cx="24" cy="24" r="18"/>
+    <path d="M24 14 V24 L32 29"/>
+  </symbol>
+  <symbol id="i-hoop" viewBox="0 0 48 48">
+    <rect x="8" y="6" width="24" height="14" rx="1"/>
+    <ellipse cx="26" cy="22" rx="12" ry="3.2"/>
+    <path d="M16 23 L19 39 M22 23.5 L23.5 39 M30 23.5 L28.5 39 M36 23 L33 39"/>
+  </symbol>
+  <symbol id="i-whistle" viewBox="0 0 48 48">
+    <circle cx="17" cy="27" r="10"/>
+    <circle cx="17" cy="27" r="2.6" fill="currentColor" stroke="none"/>
+    <path d="M25 22 L40 12"/>
+    <path d="M40 12 L44 8"/>
+  </symbol>
+  <symbol id="i-person" viewBox="0 0 48 48">
+    <circle cx="24" cy="15" r="8"/>
+    <path d="M8 42 C8 29 15 24 24 24 C33 24 40 29 40 42"/>
+  </symbol>
+  <symbol id="i-jersey" viewBox="0 0 48 48">
+    <path d="M14 8 L20 8 L24 13 L28 8 L34 8 L40 15 L33 20 L33 41 L15 41 L15 20 L8 15 Z"/>
+  </symbol>
+  <symbol id="i-shoe" viewBox="0 0 48 48">
+    <path d="M5 33 L5 25 C8 23 11 21 14 21 C16 21 17 23.5 20 24 L29 21 C35 19 43 22 43 30 L43 33 Z"/>
+    <path d="M5 33 H43"/>
+    <path d="M13 24 L11 30 M18 23.5 L16.5 30 M23 22.5 L22 30"/>
+  </symbol>
+  <symbol id="i-scoreboard" viewBox="0 0 48 48">
+    <rect x="5" y="13" width="38" height="22" rx="2"/>
+    <line x1="24" y1="13" x2="24" y2="35"/>
+    <rect x="10" y="18" width="8" height="12" rx="1"/>
+    <rect x="30" y="18" width="8" height="12" rx="1"/>
+  </symbol>
+  <symbol id="i-travel" viewBox="0 0 48 48">
+    <ellipse cx="14" cy="32" rx="6" ry="9.5" transform="rotate(-18 14 32)"/>
+    <ellipse cx="32" cy="18" rx="6" ry="9.5" transform="rotate(18 32 18)"/>
+    <path d="M18 24 L28 12" stroke-dasharray="3 4"/>
+  </symbol>
+  <symbol id="i-dbldribble" viewBox="0 0 48 48">
+    <path d="M6 34 Q15 12 24 34"/>
+    <path d="M24 34 Q33 12 42 34"/>
+    <circle cx="24" cy="34" r="3" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="i-dribble" viewBox="0 0 48 48">
+    <circle cx="24" cy="14" r="8"/>
+    <path d="M24 22 V30" stroke-dasharray="2 4"/>
+    <path d="M12 40 Q24 28 36 40"/>
+  </symbol>
+  <symbol id="i-pass" viewBox="0 0 48 48">
+    <circle cx="11" cy="24" r="6"/>
+    <path d="M19 24 H32" stroke-dasharray="3 3"/>
+    <path d="M28 18 L38 24 L28 30"/>
+  </symbol>
+  <symbol id="i-shoot" viewBox="0 0 48 48">
+    <circle cx="8" cy="36" r="5"/>
+    <path d="M12 33 Q26 4 42 18" stroke-dasharray="3 3"/>
+    <rect x="36" y="12" width="4" height="12"/>
+    <ellipse cx="30" cy="19" rx="8" ry="2.4"/>
+  </symbol>
+  <symbol id="i-rebound" viewBox="0 0 48 48">
+    <ellipse cx="24" cy="34" rx="15" ry="3"/>
+    <circle cx="24" cy="15" r="7"/>
+    <path d="M12 29 V19 M8.5 22.5 L12 18 L15.5 22.5"/>
+    <path d="M36 29 V19 M32.5 22.5 L36 18 L39.5 22.5"/>
+  </symbol>
+  <symbol id="i-sun" viewBox="0 0 48 48">
+    <circle cx="24" cy="24" r="8"/>
+    <path d="M24 4 V10 M24 38 V44 M4 24 H10 M38 24 H44 M9 9 L13 13 M35 35 L39 39 M39 9 L35 13 M13 35 L9 39"/>
+  </symbol>
+  <symbol id="i-moon" viewBox="0 0 48 48">
+    <path d="M38 28 A16 16 0 1 1 20 6 A12.5 12.5 0 0 0 38 28 Z"/>
+  </symbol>
+</defs>
+</svg>
+
+<header class="topbar">
+  <div class="brand">
+    <svg class="icon"><use href="#i-ball"/></svg>
+    <span>บาสเกตบอล 101<small>คู่มือเบื้องต้นสำหรับผู้เริ่มต้น</small></span>
+  </div>
+  <button id="theme-toggle" aria-label="สลับธีมสว่าง/มืด" aria-pressed="false">
+    <svg class="icon sun"><use href="#i-sun"/></svg>
+    <svg class="icon moon"><use href="#i-moon"/></svg>
+  </button>
+</header>
+
+<nav class="tabbar" role="tablist" aria-label="เมนูหลัก">
+  <button class="tab active" data-target="home" role="tab" aria-selected="true">
+    <svg class="icon"><use href="#i-ball"/></svg>
+    <span class="tab-label-full">หน้าหลัก</span><span class="tab-label-short">หน้าหลัก</span>
+  </button>
+  <button class="tab" data-target="history" role="tab" aria-selected="false">
+    <svg class="icon"><use href="#i-clock"/></svg>
+    <span class="tab-label-full">ประวัติ</span><span class="tab-label-short">ประวัติ</span>
+  </button>
+  <button class="tab" data-target="equipment" role="tab" aria-selected="false">
+    <svg class="icon"><use href="#i-hoop"/></svg>
+    <span class="tab-label-full">อุปกรณ์ &amp; สนาม</span><span class="tab-label-short">อุปกรณ์</span>
+  </button>
+  <button class="tab" data-target="rules" role="tab" aria-selected="false">
+    <svg class="icon"><use href="#i-whistle"/></svg>
+    <span class="tab-label-full">กฎกติกา</span><span class="tab-label-short">กติกา</span>
+  </button>
+  <button class="tab" data-target="about" role="tab" aria-selected="false">
+    <svg class="icon"><use href="#i-person"/></svg>
+    <span class="tab-label-full">ผู้จัดทำ</span><span class="tab-label-short">ผู้จัดทำ</span>
+  </button>
+</nav>
+
+<main>
+
+  <!-- ============ PAGE 1: หน้าหลัก ============ -->
+  <section id="page-home" class="page active">
+    <div class="hero">
+      <div class="hero-copy">
+        <h1>ลูกกลม ห่วงเดียว กติกาที่ทุกคนเข้าใจได้</h1>
+        <p>เว็บไซต์นี้พาไปรู้จักกีฬาบาสเกตบอลตั้งแต่จุดเริ่มต้น ไปจนถึงอุปกรณ์ สนามแข่งขัน และกฎกติกาพื้นฐานที่ผู้เล่นและผู้ชมทุกคนควรรู้ เหมาะสำหรับผู้เริ่มต้นที่อยากเข้าใจเกมนี้แบบง่าย ๆ</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" data-target="history">เริ่มอ่านประวัติ</button>
+          <button class="btn btn-ghost" data-target="rules">ดูกฎกติกาเลย</button>
+        </div>
+      </div>
+      <div class="hero-art">
+        <svg viewBox="0 0 380 380" role="img" aria-label="ภาพประกอบลูกบาสเกตบอลกำลังพุ่งเข้าห่วง">
+          <line x1="0" y1="330" x2="380" y2="330" stroke="var(--line)" stroke-width="3"/>
+          <path d="M0 330 A120 55 0 0 1 235 330" stroke="var(--line)" stroke-width="2" fill="none" stroke-dasharray="6 7"/>
+          <rect x="252" y="30" width="14" height="100" rx="2" fill="var(--ink)"/>
+          <rect x="222" y="40" width="40" height="42" fill="none" stroke="var(--ink)" stroke-width="2.5"/>
+          <ellipse cx="222" cy="112" rx="30" ry="7" fill="none" stroke="var(--accent)" stroke-width="5"/>
+          <path d="M198 114 L206 165 M209 115.5 L213 165 M222 116 L222 167 M235 115.5 L231 165 M246 114 L238 165" stroke="var(--ink-soft)" stroke-width="1.6" fill="none"/>
+          <g class="hero-ball">
+            <circle r="20" fill="var(--accent)"/>
+            <path d="M-20 0 H20 M0 -20 V20 M-13 -11 C-4 -3 4 -3 13 -11 M-13 11 C-4 3 4 3 13 11" stroke="var(--surface)" stroke-width="1.6" fill="none"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="stat-strip">
+      <div><span class="stat-num">5</span><span class="stat-label">ผู้เล่นในสนามต่อทีม</span></div>
+      <div><span class="stat-num">1891</span><span class="stat-label">ปีที่กำเนิดกีฬานี้</span></div>
+      <div><span class="stat-num">4</span><span class="stat-label">ควอเตอร์ต่อหนึ่งเกม</span></div>
+      <div><span class="stat-num">3</span><span class="stat-label">แต้มสูงสุดต่อการยิงหนึ่งครั้ง</span></div>
+    </div>
+  </section>
+
+  <!-- ============ PAGE 2: ประวัติ ============ -->
+  <section id="page-history" class="page">
+    <div class="section-head">
+      <h2>ประวัติของบาสเกตบอล</h2>
+      <p>กีฬาที่เริ่มจากไอเดียง่าย ๆ ในห้องยิมเล็ก ๆ ช่วงฤดูหนาว จนกลายเป็นกีฬาที่มีผู้เล่นและผู้ชมมากที่สุดชนิดหนึ่งของโลก</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="timeline-year">ค.ศ. 1891</span>
+        <h3>จุดเริ่มต้นที่สหรัฐอเมริกา</h3>
+        <p>เจมส์ ไนสมิธ (James Naismith) ครูสอนพลศึกษาที่วิทยาลัย YMCA เมืองสปริงฟิลด์ รัฐแมสซาชูเซตส์ คิดค้นเกมนี้ขึ้นเพื่อให้นักเรียนออกกำลังกายในร่มช่วงฤดูหนาว โดยใช้ตะกร้าลูกพีชแขวนไว้ที่ระเบียงและลูกฟุตบอล พร้อมเขียนกติกาไว้ 13 ข้อ</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">ค.ศ. 1892</span>
+        <h3>การแข่งขันอย่างเป็นทางการครั้งแรก</h3>
+        <p>หลังจากทดลองเล่นในชั้นเรียน เกมบาสเกตบอลเริ่มแพร่หลายไปยังโรงเรียนและสโมสรอื่น ๆ อย่างรวดเร็ว</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">ค.ศ. 1932</span>
+        <h3>ก่อตั้ง FIBA</h3>
+        <p>สหพันธ์บาสเกตบอลนานาชาติ (FIBA) ก่อตั้งขึ้นเพื่อวางมาตรฐานกติกาการแข่งขันให้เป็นแบบเดียวกันทั่วโลก</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">ค.ศ. 1936</span>
+        <h3>เข้าสู่โอลิมปิก</h3>
+        <p>บาสเกตบอลประเภทชายถูกบรรจุเป็นกีฬาโอลิมปิกอย่างเป็นทางการครั้งแรก ในโอลิมปิกที่กรุงเบอร์ลิน</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">ค.ศ. 1946</span>
+        <h3>กำเนิดลีก NBA</h3>
+        <p>ลีกบาสเกตบอลอาชีพในสหรัฐอเมริกาก่อตั้งขึ้น และต่อมาพัฒนาเป็น NBA ลีกบาสเกตบอลอาชีพที่มีชื่อเสียงและได้รับความนิยมมากที่สุดในโลก</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">ค.ศ. 1976</span>
+        <h3>บาสเกตบอลหญิงสู่โอลิมปิก</h3>
+        <p>บาสเกตบอลประเภทหญิงได้รับการบรรจุเป็นกีฬาโอลิมปิกอย่างเป็นทางการ ในโอลิมปิกที่เมืองมอนทรีออล</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">ปัจจุบัน</span>
+        <h3>กีฬาระดับโลก</h3>
+        <p>บาสเกตบอลเป็นกีฬาที่มีผู้เล่นและผู้ชมทั่วโลก มีการแข่งขันตั้งแต่ระดับโรงเรียน มหาวิทยาลัย ไปจนถึงลีกอาชีพในหลายประเทศ รวมถึงประเทศไทย</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PAGE 3: อุปกรณ์และสนาม ============ -->
+  <section id="page-equipment" class="page">
+    <div class="section-head">
+      <h2>อุปกรณ์และสนามแข่งขัน</h2>
+      <p>ก่อนลงเล่นจริง มาทำความรู้จักกับสนามและอุปกรณ์พื้นฐานที่ใช้ในกีฬาบาสเกตบอลกันก่อน</p>
+    </div>
+
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 480 260" role="img" aria-label="แผนผังสนามบาสเกตบอลจากมุมมองด้านบน">
+        <rect x="10" y="10" width="460" height="240" fill="none" stroke="var(--ink)" stroke-width="2.5"/>
+        <line x1="240" y1="10" x2="240" y2="250" stroke="var(--ink)" stroke-width="2"/>
+        <circle cx="240" cy="130" r="30" fill="none" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="10" y="90" width="70" height="80" fill="none" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="400" y="90" width="70" height="80" fill="none" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M80 90 A40 40 0 0 1 80 170" fill="none" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M400 90 A40 40 0 0 0 400 170" fill="none" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M10 40 A140 140 0 0 0 10 220" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+        <path d="M470 40 A140 140 0 0 1 470 220" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+        <ellipse cx="24" cy="130" rx="8" ry="3" fill="none" stroke="var(--accent-deep)" stroke-width="3"/>
+        <ellipse cx="456" cy="130" rx="8" ry="3" fill="none" stroke="var(--accent-deep)" stroke-width="3"/>
+
+        <circle class="court-num-bg" cx="240" cy="130" r="11"/>
+        <text class="court-num" x="240" y="134" text-anchor="middle" font-size="12" font-family="Kanit,sans-serif" font-weight="700">1</text>
+        <circle class="court-num-bg" cx="240" cy="20" r="11"/>
+        <text class="court-num" x="240" y="24" text-anchor="middle" font-size="12" font-family="Kanit,sans-serif" font-weight="700">2</text>
+        <circle class="court-num-bg" cx="45" cy="130" r="11"/>
+        <text class="court-num" x="45" y="134" text-anchor="middle" font-size="12" font-family="Kanit,sans-serif" font-weight="700">3</text>
+        <circle class="court-num-bg" cx="80" cy="130" r="11"/>
+        <text class="court-num" x="80" y="134" text-anchor="middle" font-size="12" font-family="Kanit,sans-serif" font-weight="700">4</text>
+        <circle class="court-num-bg" cx="150" cy="230" r="11"/>
+        <text class="court-num" x="150" y="234" text-anchor="middle" font-size="12" font-family="Kanit,sans-serif" font-weight="700">5</text>
+        <circle class="court-num-bg" cx="24" cy="110" r="11"/>
+        <text class="court-num" x="24" y="114" text-anchor="middle" font-size="12" font-family="Kanit,sans-serif" font-weight="700">6</text>
+      </svg>
+
+      <ul class="diagram-legend">
+        <li class="legend-item"><span class="legend-num">1</span><div><strong>วงกลมกลางสนาม</strong><span>จุดเริ่มเกมด้วยการกระโดดแย่งบอล</span></div></li>
+        <li class="legend-item"><span class="legend-num">2</span><div><strong>เส้นกลางสนาม</strong><span>แบ่งสนามเป็นฝั่งรุกและฝั่งรับของแต่ละทีม</span></div></li>
+        <li class="legend-item"><span class="legend-num">3</span><div><strong>เส้น 3 แต้ม</strong><span>ยิงจากนอกเส้นนี้ได้ 3 คะแนน ระยะแตกต่างกันเล็กน้อยตามมาตรฐานการแข่งขัน</span></div></li>
+        <li class="legend-item"><span class="legend-num">4</span><div><strong>เขตโทษ (คีย์)</strong><span>บริเวณสี่เหลี่ยมหน้าห่วง มีกติกาห้ามอยู่นานเกิน 3 วินาที</span></div></li>
+        <li class="legend-item"><span class="legend-num">5</span><div><strong>เส้นโยนโทษ</strong><span>จุดยืนยิงลูกโทษเมื่อถูกฟาวล์</span></div></li>
+        <li class="legend-item"><span class="legend-num">6</span><div><strong>ห่วงและแป้นบาส</strong><span>เป้าหมายของการทำคะแนน สูงจากพื้น 3.05 เมตร</span></div></li>
+      </ul>
+    </div>
+
+    <h3 style="margin-bottom:16px;">อุปกรณ์หลักในการเล่น</h3>
+    <div class="card-grid" style="margin-bottom:56px;">
+      <div class="card">
+        <div class="icon-badge"><svg class="icon"><use href="#i-ball"/></svg></div>
+        <h3>ลูกบาสเกตบอล</h3>
+        <p>ทำจากยางหรือหนัง ผิวมีลวดลายช่วยให้เลี้ยงบอลได้ถนัดมือ ขนาดมาตรฐานสำหรับผู้ใหญ่คือเบอร์ 7</p>
+      </div>
+      <div class="card">
+        <div class="icon-badge"><svg class="icon"><use href="#i-hoop"/></svg></div>
+        <h3>ห่วงและตาข่าย</h3>
+        <p>ห่วงเหล็กเส้นผ่านศูนย์กลางประมาณ 45 ซม. ติดตั้งสูงจากพื้น 3.05 เมตร พร้อมตาข่ายห้อยด้านล่าง</p>
+      </div>
+      <div class="card">
+        <div class="icon-badge"><svg class="icon"><use href="#i-scoreboard"/></svg></div>
+        <h3>แป้นบาสและนาฬิกา</h3>
+        <p>แป้นบาสเป็นแผ่นสี่เหลี่ยมด้านหลังห่วง ใช้สะท้อนบอล ส่วนนาฬิกาจับเวลาการยิงจะนับถอยหลัง 24 วินาที</p>
+      </div>
+      <div class="card">
+        <div class="icon-badge"><svg class="icon"><use href="#i-jersey"/></svg></div>
+        <h3>ชุดแข่งขัน</h3>
+        <p>เสื้อกล้ามและกางเกงขาสั้นระบายอากาศได้ดี มีหมายเลขติดไว้ด้านหน้าและด้านหลังเพื่อระบุตัวผู้เล่น</p>
+      </div>
+      <div class="card">
+        <div class="icon-badge"><svg class="icon"><use href="#i-shoe"/></svg></div>
+        <h3>รองเท้าบาสเกตบอล</h3>
+        <p>พื้นยึดเกาะดีและรองรับข้อเท้า ช่วยรองรับแรงกระแทกจากการวิ่ง กระโดด และเปลี่ยนทิศทางบ่อย ๆ</p>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom:16px;">ตำแหน่งผู้เล่นในสนาม</h3>
+    <div class="position-wrap">
+      <ul class="position-list">
+        <li><span class="pos-badge">PG</span><div><strong>พอยต์การ์ด</strong><span>ผู้วางแผนเกมและจ่ายบอลให้เพื่อนร่วมทีม</span></div></li>
+        <li><span class="pos-badge">SG</span><div><strong>ชูตติ้งการ์ด</strong><span>ผู้เล่นที่เน้นยิงระยะไกลและทำคะแนน</span></div></li>
+        <li><span class="pos-badge">SF</span><div><strong>สมอลฟอร์เวิร์ด</strong><span>เล่นได้รอบด้าน ทั้งรุกและรับ เคลื่อนที่คล่องตัว</span></div></li>
+        <li><span class="pos-badge">PF</span><div><strong>เพาเวอร์ฟอร์เวิร์ด</strong><span>ตัวใหญ่ แข็งแรง เล่นใกล้แป้นทั้งรุกและรับ</span></div></li>
+        <li><span class="pos-badge">C</span><div><strong>เซ็นเตอร์</strong><span>ผู้เล่นตัวสูงที่สุดในทีม เน้นเกมใต้แป้นและรีบาวด์</span></div></li>
+      </ul>
+      <div class="position-art">
+        <svg viewBox="0 0 260 240" role="img" aria-label="แผนผังตำแหน่งผู้เล่นครึ่งสนาม">
+          <path d="M10 10 H250 V230 H10 Z" fill="none" stroke="var(--line)" stroke-width="2"/>
+          <path d="M10 200 A120 120 0 0 1 10 60" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="5 6"/>
+          <rect x="10" y="80" width="60" height="100" fill="none" stroke="var(--line)" stroke-width="2"/>
+          <ellipse cx="24" cy="130" rx="7" ry="2.6" fill="none" stroke="var(--ink)" stroke-width="2.5"/>
+          <circle cx="120" cy="60" r="14" fill="var(--accent)"/>
+          <text x="120" y="64" text-anchor="middle" fill="#fff" font-size="11" font-family="Kanit,sans-serif" font-weight="700">PG</text>
+          <circle cx="205" cy="95" r="14" fill="var(--accent)"/>
+          <text x="205" y="99" text-anchor="middle" fill="#fff" font-size="11" font-family="Kanit,sans-serif" font-weight="700">SG</text>
+          <circle cx="205" cy="175" r="14" fill="var(--accent)"/>
+          <text x="205" y="179" text-anchor="middle" fill="#fff" font-size="11" font-family="Kanit,sans-serif" font-weight="700">SF</text>
+          <circle cx="70" cy="185" r="14" fill="var(--accent-deep)"/>
+          <text x="70" y="189" text-anchor="middle" fill="#fff" font-size="11" font-family="Kanit,sans-serif" font-weight="700">PF</text>
+          <circle cx="55" cy="105" r="14" fill="var(--accent-deep)"/>
+          <text x="55" y="109" text-anchor="middle" fill="#fff" font-size="10" font-family="Kanit,sans-serif" font-weight="700">C</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PAGE 4: กฎกติกา ============ -->
+  <section id="page-rules" class="page">
+    <div class="section-head">
+      <h2>กฎกติกาพื้นฐาน</h2>
+      <p>กติกาสำคัญที่ทำให้เกมดำเนินไปอย่างมีระเบียบ ทั้งเรื่องเวลา คะแนน การทำผิดกติกา และทักษะพื้นฐานที่ผู้เล่นทุกคนต้องมี</p>
+    </div>
+
+    <div class="rule-block">
+      <h3>การเล่นและเวลาแข่งขัน</h3>
+      <p>แต่ละทีมส่งผู้เล่นลงสนามครั้งละ 5 คน และเปลี่ยนตัวผู้เล่นได้ไม่จำกัดจำนวนครั้ง เกมแบ่งออกเป็น 4 ควอเตอร์ โดยมาตรฐานสากล (FIBA) กำหนดควอเตอร์ละ 10 นาที ส่วนลีก NBA ใช้ควอเตอร์ละ 12 นาที</p>
+    </div>
+
+    <div class="rule-block">
+      <h3>การนับคะแนน</h3>
+      <table class="score-table">
+        <tr><th>ลักษณะการยิง</th><th>คะแนนที่ได้</th></tr>
+        <tr><td>ยิงจากในเส้น 3 แต้ม</td><td>2 คะแนน</td></tr>
+        <tr><td>ยิงจากนอกเส้น 3 แต้ม</td><td>3 คะแนน</td></tr>
+        <tr><td>ยิงลูกโทษ (Free Throw)</td><td>1 คะแนน</td></tr>
+      </table>
+    </div>
+
+    <div class="rule-block">
+      <h3>การทำผิดกติกา (Violation)</h3>
+      <div class="card-grid">
+        <div class="card danger">
+          <div class="icon-badge"><svg class="icon"><use href="#i-travel"/></svg></div>
+          <h3>เดินเกิน (Traveling)</h3>
+          <p>เคลื่อนที่หลายก้าวโดยไม่เลี้ยงบอลตามที่กำหนด</p>
+        </div>
+        <div class="card danger">
+          <div class="icon-badge"><svg class="icon"><use href="#i-dbldribble"/></svg></div>
+          <h3>เลี้ยงบอลผิด (Double Dribble)</h3>
+          <p>หยุดเลี้ยงแล้วเลี้ยงใหม่ หรือใช้สองมือเลี้ยงบอลพร้อมกัน</p>
+        </div>
+        <div class="card danger">
+          <div class="icon-badge"><svg class="icon"><use href="#i-clock"/></svg></div>
+          <h3>เกิน 24 วินาที</h3>
+          <p>ทีมที่ครองบอลต้องยิงบอลให้โดนห่วงภายใน 24 วินาที</p>
+        </div>
+        <div class="card danger">
+          <div class="icon-badge"><svg class="icon"><use href="#i-clock"/></svg></div>
+          <h3>เกิน 8 วินาที</h3>
+          <p>ต้องนำบอลข้ามเส้นกลางสนามภายใน 8 วินาทีหลังได้ครองบอล</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-block">
+      <h3>การฟาวล์ (Foul)</h3>
+      <div class="card-grid">
+        <div class="card danger">
+          <div class="icon-badge"><svg class="icon"><use href="#i-whistle"/></svg></div>
+          <h3>ฟาวล์ส่วนบุคคล</h3>
+          <p>การปะทะคู่แข่งผิดกติกา เช่น ดัน ดึง หรือกีดขวางร่างกาย มักทำให้อีกฝ่ายได้ยิงลูกโทษ</p>
+        </div>
+        <div class="card danger">
+          <div class="icon-badge"><svg class="icon"><use href="#i-whistle"/></svg></div>
+          <h3>ฟาวล์เทคนิค</h3>
+          <p>พฤติกรรมไม่เหมาะสม เช่น โต้เถียงกรรมการหรือแสดงกิริยาไม่เหมาะสม</p>
+        </div>
+        <div class="card danger">
+          <div class="icon-badge"><svg class="icon"><use href="#i-person"/></svg></div>
+          <h3>ฟาวล์ครบกำหนด</h3>
+          <p>เมื่อผู้เล่นทำฟาวล์ครบ 5 ครั้ง (ตามมาตรฐาน FIBA) จะต้องออกจากการแข่งขันทันที</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-block">
+      <h3>ทักษะพื้นฐาน</h3>
+      <div class="card-grid">
+        <div class="card">
+          <div class="icon-badge"><svg class="icon"><use href="#i-dribble"/></svg></div>
+          <h3>การเลี้ยงบอล</h3>
+          <p>ใช้มือกระเด้งบอลกับพื้นขณะเคลื่อนที่ เพื่อควบคุมบอลไว้กับตัว</p>
+        </div>
+        <div class="card">
+          <div class="icon-badge"><svg class="icon"><use href="#i-pass"/></svg></div>
+          <h3>การส่งบอล</h3>
+          <p>ส่งบอลให้เพื่อนร่วมทีม เช่น ส่งระดับอก ส่งกระดอนพื้น หรือส่งเหนือศีรษะ</p>
+        </div>
+        <div class="card">
+          <div class="icon-badge"><svg class="icon"><use href="#i-shoot"/></svg></div>
+          <h3>การยิงบอล</h3>
+          <p>พยายามโยนบอลให้ลงห่วง เช่น เลย์อัพใกล้แป้น หรือยิงกระโดดระยะไกล</p>
+        </div>
+        <div class="card">
+          <div class="icon-badge"><svg class="icon"><use href="#i-rebound"/></svg></div>
+          <h3>การรีบาวด์</h3>
+          <p>แย่งบอลที่กระดอนจากแป้นหรือห่วงหลังยิงไม่เข้า ทั้งฝ่ายรุกและฝ่ายรับ</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PAGE 5: ผู้จัดทำ ============ -->
+  <section id="page-about" class="page">
+    <div class="section-head">
+      <h2>ผู้จัดทำ</h2>
+      <p>หน้านี้เตรียมไว้สำหรับใส่ข้อมูลผู้จัดทำเว็บไซต์ สามารถแก้ไขหรือเว้นว่างไว้ได้ตามต้องการ</p>
+    </div>
+    <div class="about-card">
+      <div class="about-field"><label>นายอัมรินทร์ ฤาชาบุตร</label><div class="blank"></div></div>
+      <div class="about-field"><label>ชั้น ม.4/11</label><div class="blank"></div></div>
+      <a href="https://www.cpss.ac.th" target="_blank"><div class="about-field"><label>โรงเรียน ชุมแพศึกษา</label><div class="blank"></div></div></a>
+    </div>
+  </section>
+
+</main>
+
+<footer>เว็บไซต์ให้ความรู้เบื้องต้นเรื่องกีฬาบาสเกตบอล จัดทำเพื่อการศึกษา</footer>
+
+<script>
+(function(){
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var pages = Array.prototype.slice.call(document.querySelectorAll('.page'));
+  var ctaButtons = Array.prototype.slice.call(document.querySelectorAll('.hero-actions .btn'));
+
+  function goTo(target){
+    tabs.forEach(function(t){
+      var active = t.dataset.target === target;
+      t.classList.toggle('active', active);
+      t.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    pages.forEach(function(p){
+      p.classList.toggle('active', p.id === 'page-' + target);
+    });
+    window.scrollTo({top:0, behavior:'instant'});
+    try{ localStorage.setItem('bb101-page', target); }catch(e){}
+  }
+
+  tabs.forEach(function(btn){
+    btn.addEventListener('click', function(){ goTo(btn.dataset.target); });
+  });
+  ctaButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){ goTo(btn.dataset.target); });
+  });
+
+  try{
+    var saved = localStorage.getItem('bb101-page');
+    if(saved && document.getElementById('page-' + saved)) goTo(saved);
+  }catch(e){}
+
+  var themeBtn = document.getElementById('theme-toggle');
+  function applyTheme(t){
+    document.documentElement.setAttribute('data-theme', t);
+    themeBtn.setAttribute('aria-pressed', t === 'dark' ? 'true' : 'false');
+  }
+  try{
+    var savedTheme = localStorage.getItem('bb101-theme');
+    if(savedTheme) applyTheme(savedTheme);
+  }catch(e){}
+  themeBtn.addEventListener('click', function(){
+    var current = document.documentElement.getAttribute('data-theme');
+    if(!current){
+      current = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    var next = current === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    try{ localStorage.setItem('bb101-theme', next); }catch(e){}
+  });
+})();
+</script>
+</body>
+</html>
