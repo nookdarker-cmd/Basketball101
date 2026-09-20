@@ -56,7 +56,7 @@
     --danger:#E2596B;
     --danger-tint:#3A2028;
   }
-
+ 
   *,*::before,*::after{ box-sizing:border-box; }
   html{
     scroll-padding-top: calc(var(--nav-h) + var(--tab-h) + env(safe-area-inset-top,0px));
@@ -88,10 +88,10 @@
   button{ font-family:inherit; }
   img,svg{ display:block; max-width:100%; }
   :focus-visible{ outline:3px solid var(--accent); outline-offset:2px; }
-
+ 
   .icon{ width:1.4em; height:1.4em; stroke:currentColor; fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; }
   .icon.filled{ fill:currentColor; }
-
+ 
   /* ---------- top bar & tabs ---------- */
   .topbar{
     position:sticky; top:0; z-index:40;
@@ -104,7 +104,7 @@
   .brand{ display:flex; align-items:center; gap:.55em; font-family:'Kanit',sans-serif; font-weight:700; font-size:1.05rem; color:var(--ink); }
   .brand .icon{ color:var(--accent); width:1.7em; height:1.7em; }
   .brand small{ display:block; font-family:'Noto Sans Thai'; font-weight:400; font-size:.7em; color:var(--ink-soft); }
-
+ 
   #theme-toggle{
     display:flex; align-items:center; justify-content:center;
     width:38px; height:38px; border-radius:50%;
@@ -119,7 +119,7 @@
     :root:not([data-theme="light"]) #theme-toggle .sun{ display:none; }
     :root:not([data-theme="light"]) #theme-toggle .moon{ display:block; }
   }
-
+ 
   .tabbar{
     position:sticky; top:var(--nav-h); z-index:39;
     display:flex; gap:4px;
@@ -142,17 +142,17 @@
   .tab.active{ color:var(--accent-deep); border-bottom-color:var(--accent); }
   .tab .tab-label-full{ display:inline; }
   .tab .tab-label-short{ display:none; }
-
+ 
   main{ max-width:var(--maxw); margin:0 auto; padding:clamp(28px,5vw,56px) clamp(16px,4vw,32px) 80px; }
   .page{ display:none; }
   .page.active{ display:block; animation:pagein .35s ease both; }
   @keyframes pagein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
-
+ 
   footer{
     border-top:1px solid var(--line); background:var(--bg-alt);
     text-align:center; padding:22px 16px; font-size:.85rem; color:var(--ink-soft);
   }
-
+ 
   /* ---------- hero (home) ---------- */
   .hero{ display:grid; grid-template-columns:1.1fr 1fr; gap:clamp(24px,5vw,56px); align-items:center; }
   .hero-copy .eyebrow{ display:none; }
@@ -168,7 +168,7 @@
   .btn-primary:hover{ background:var(--accent-deep); }
   .btn-ghost{ background:transparent; border-color:var(--ink); color:var(--ink); }
   .btn-ghost:hover{ background:var(--ink); color:var(--bg); }
-
+ 
   .hero-art{ position:relative; }
   .hero-ball{ transform-box:fill-box; transform-origin:center; transform:translate(60px,300px) scale(1); animation:shotArc 1.7s cubic-bezier(.32,.72,.35,1) .35s 1 both; }
   @keyframes shotArc{
@@ -180,7 +180,7 @@
   @media (prefers-reduced-motion:reduce){
     .hero-ball{ animation:none; transform:translate(300px,197px) scale(.6) rotate(250deg); }
   }
-
+ 
   .stat-strip{
     margin-top:clamp(32px,6vw,56px);
     display:grid; grid-template-columns:repeat(4,1fr);
@@ -190,10 +190,10 @@
   .stat-strip div:last-child{ border-right:none; }
   .stat-num{ font-family:'Kanit',sans-serif; font-weight:800; font-size:clamp(1.5rem,4vw,2.1rem); color:var(--accent-deep); display:block; }
   .stat-label{ font-size:.8rem; color:var(--ink-soft); }
-
+ 
   .section-head{ max-width:68ch; margin-bottom:clamp(24px,4vw,36px); }
   .section-head h2{ margin-bottom:.3em; }
-
+ 
   /* ---------- timeline (history) ---------- */
   .timeline{ position:relative; padding-left:34px; border-left:2px dashed var(--line); display:flex; flex-direction:column; gap:28px; }
   .timeline-item{ position:relative; }
@@ -205,7 +205,7 @@
   .timeline-year{ font-family:'Kanit',sans-serif; font-weight:700; color:var(--accent-deep); font-size:1.05rem; }
   .timeline-item h3{ margin:.1em 0 .25em; }
   .timeline-item p{ margin:0; }
-
+ 
   /* ---------- cards ---------- */
   .card-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
   .card{
@@ -221,7 +221,7 @@
   .card.danger .icon-badge{ background:var(--danger-tint); color:var(--danger); }
   .card h3{ margin-bottom:.35em; }
   .card p{ margin:0; font-size:.94rem; }
-
+ 
   /* ---------- court diagram (equipment) ---------- */
   .diagram-wrap{ display:grid; grid-template-columns:1.2fr 1fr; gap:clamp(20px,4vw,40px); align-items:center; margin:clamp(24px,4vw,36px) 0 clamp(40px,6vw,60px); }
   .diagram-legend{ display:flex; flex-direction:column; gap:12px; }
@@ -233,10 +233,10 @@
   }
   .legend-item strong{ display:block; font-size:.95rem; }
   .legend-item span{ font-size:.86rem; color:var(--ink-soft); }
-
+ 
   .court-num{ fill:var(--bg); }
   .court-num-bg{ fill:var(--ink); }
-
+ 
   .position-wrap{ display:grid; grid-template-columns:1fr 1.15fr; gap:clamp(20px,4vw,40px); align-items:center; }
   .position-list{ display:flex; flex-direction:column; gap:14px; }
   .position-list li{ display:flex; gap:12px; align-items:flex-start; }
@@ -247,25 +247,30 @@
   }
   .position-list strong{ display:block; font-size:.95rem; }
   .position-list span{ font-size:.86rem; color:var(--ink-soft); }
-
+ 
   /* ---------- rules page ---------- */
   .rule-block{ margin-bottom:clamp(36px,6vw,56px); }
   .score-table{ width:100%; border-collapse:collapse; max-width:520px; }
   .score-table td,.score-table th{ padding:12px 14px; border-bottom:1px solid var(--line); text-align:left; font-size:.95rem; }
   .score-table th{ font-family:'Kanit',sans-serif; color:var(--ink-soft); font-weight:600; font-size:.82rem; }
   .score-table td:last-child, .score-table th:last-child{ text-align:right; font-family:'Kanit',sans-serif; font-weight:700; color:var(--accent-deep); }
-
+ 
   /* ---------- about ---------- */
-  .about-card{
-    max-width:560px; border:2px dashed var(--line); border-radius:var(--radius);
-    padding:clamp(28px,5vw,44px); background:var(--surface);
-  }
   .about-field{ margin-bottom:18px; }
   .about-field label{ display:block; font-size:.8rem; color:var(--ink-soft); margin-bottom:4px; font-family:'Kanit',sans-serif; }
-  .about-field .blank{ border-bottom:1px dashed var(--ink-soft); min-height:1.6em; }
-  .about-note{ display:flex; gap:10px; align-items:flex-start; margin-top:24px; padding:14px 16px; background:var(--bg-alt); border-radius:var(--radius); font-size:.86rem; color:var(--ink-soft); }
-  .about-note .icon{ color:var(--accent-deep); margin-top:2px; }
-
+  .about-field .about-value{ font-family:'Kanit',sans-serif; font-weight:600; font-size:1.1rem; color:var(--ink); }
+  .about-field .about-value a{ color:var(--accent-deep); }
+  .about-photo{ width:200px; max-width:100%; margin:0; }
+  .about-photo img{
+    width:100%; height:100%; object-fit:cover;
+    border:1px solid var(--line); border-radius:var(--radius);
+    display:block; background:transparent;
+  }
+  .about-info{ max-width:420px; }
+  .about-wrap{ display:flex; flex-wrap:wrap; align-items:stretch; gap:clamp(20px,4vw,40px); }
+  .about-wrap .about-info{ flex:1 1 240px; min-width:0; }
+  .about-wrap .about-photo{ flex:0 0 200px; margin:0; }
+ 
   /* ---------- bottom fixed tabbar on mobile ---------- */
   @media (max-width:760px){
     .hero{ grid-template-columns:1fr; }
@@ -274,7 +279,7 @@
     .stat-strip div:nth-child(2){ border-right:none; }
     .diagram-wrap, .position-wrap{ grid-template-columns:1fr; }
     .position-wrap .position-art{ order:-1; max-width:280px; margin:0 auto; }
-
+ 
     .tabbar{
       position:fixed; top:auto; bottom:0; left:0; right:0;
       height:calc(var(--tab-h) + env(safe-area-inset-bottom,0px));
@@ -293,7 +298,7 @@
 </style>
 </head>
 <body>
-
+ 
 <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
 <defs>
   <symbol id="i-ball" viewBox="0 0 48 48">
@@ -377,7 +382,7 @@
   </symbol>
 </defs>
 </svg>
-
+ 
 <header class="topbar">
   <div class="brand">
     <svg class="icon"><use href="#i-ball"/></svg>
@@ -388,7 +393,7 @@
     <svg class="icon moon"><use href="#i-moon"/></svg>
   </button>
 </header>
-
+ 
 <nav class="tabbar" role="tablist" aria-label="เมนูหลัก">
   <button class="tab active" data-target="home" role="tab" aria-selected="true">
     <svg class="icon"><use href="#i-ball"/></svg>
@@ -411,9 +416,9 @@
     <span class="tab-label-full">ผู้จัดทำ</span><span class="tab-label-short">ผู้จัดทำ</span>
   </button>
 </nav>
-
+ 
 <main>
-
+ 
   <!-- ============ PAGE 1: หน้าหลัก ============ -->
   <section id="page-home" class="page active">
     <div class="hero">
@@ -440,7 +445,7 @@
         </svg>
       </div>
     </div>
-
+ 
     <div class="stat-strip">
       <div><span class="stat-num">5</span><span class="stat-label">ผู้เล่นในสนามต่อทีม</span></div>
       <div><span class="stat-num">1891</span><span class="stat-label">ปีที่กำเนิดกีฬานี้</span></div>
@@ -448,7 +453,7 @@
       <div><span class="stat-num">3</span><span class="stat-label">แต้มสูงสุดต่อการยิงหนึ่งครั้ง</span></div>
     </div>
   </section>
-
+ 
   <!-- ============ PAGE 2: ประวัติ ============ -->
   <section id="page-history" class="page">
     <div class="section-head">
@@ -493,14 +498,14 @@
       </div>
     </div>
   </section>
-
+ 
   <!-- ============ PAGE 3: อุปกรณ์และสนาม ============ -->
   <section id="page-equipment" class="page">
     <div class="section-head">
       <h2>อุปกรณ์และสนามแข่งขัน</h2>
       <p>ก่อนลงเล่นจริง มาทำความรู้จักกับสนามและอุปกรณ์พื้นฐานที่ใช้ในกีฬาบาสเกตบอลกันก่อน</p>
     </div>
-
+ 
     <div class="diagram-wrap">
       <svg viewBox="0 0 480 260" role="img" aria-label="แผนผังสนามบาสเกตบอลจากมุมมองด้านบน">
         <rect x="10" y="10" width="460" height="240" fill="none" stroke="var(--ink)" stroke-width="2.5"/>
@@ -514,7 +519,7 @@
         <path d="M470 40 A140 140 0 0 1 470 220" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
         <ellipse cx="24" cy="130" rx="8" ry="3" fill="none" stroke="var(--accent-deep)" stroke-width="3"/>
         <ellipse cx="456" cy="130" rx="8" ry="3" fill="none" stroke="var(--accent-deep)" stroke-width="3"/>
-
+ 
         <circle class="court-num-bg" cx="240" cy="130" r="11"/>
         <text class="court-num" x="240" y="134" text-anchor="middle" font-size="12" font-family="Kanit,sans-serif" font-weight="700">1</text>
         <circle class="court-num-bg" cx="240" cy="20" r="11"/>
@@ -528,7 +533,7 @@
         <circle class="court-num-bg" cx="24" cy="110" r="11"/>
         <text class="court-num" x="24" y="114" text-anchor="middle" font-size="12" font-family="Kanit,sans-serif" font-weight="700">6</text>
       </svg>
-
+ 
       <ul class="diagram-legend">
         <li class="legend-item"><span class="legend-num">1</span><div><strong>วงกลมกลางสนาม</strong><span>จุดเริ่มเกมด้วยการกระโดดแย่งบอล</span></div></li>
         <li class="legend-item"><span class="legend-num">2</span><div><strong>เส้นกลางสนาม</strong><span>แบ่งสนามเป็นฝั่งรุกและฝั่งรับของแต่ละทีม</span></div></li>
@@ -538,7 +543,7 @@
         <li class="legend-item"><span class="legend-num">6</span><div><strong>ห่วงและแป้นบาส</strong><span>เป้าหมายของการทำคะแนน สูงจากพื้น 3.05 เมตร</span></div></li>
       </ul>
     </div>
-
+ 
     <h3 style="margin-bottom:16px;">อุปกรณ์หลักในการเล่น</h3>
     <div class="card-grid" style="margin-bottom:56px;">
       <div class="card">
@@ -567,7 +572,7 @@
         <p>พื้นยึดเกาะดีและรองรับข้อเท้า ช่วยรองรับแรงกระแทกจากการวิ่ง กระโดด และเปลี่ยนทิศทางบ่อย ๆ</p>
       </div>
     </div>
-
+ 
     <h3 style="margin-bottom:16px;">ตำแหน่งผู้เล่นในสนาม</h3>
     <div class="position-wrap">
       <ul class="position-list">
@@ -597,19 +602,19 @@
       </div>
     </div>
   </section>
-
+ 
   <!-- ============ PAGE 4: กฎกติกา ============ -->
   <section id="page-rules" class="page">
     <div class="section-head">
       <h2>กฎกติกาพื้นฐาน</h2>
       <p>กติกาสำคัญที่ทำให้เกมดำเนินไปอย่างมีระเบียบ ทั้งเรื่องเวลา คะแนน การทำผิดกติกา และทักษะพื้นฐานที่ผู้เล่นทุกคนต้องมี</p>
     </div>
-
+ 
     <div class="rule-block">
       <h3>การเล่นและเวลาแข่งขัน</h3>
       <p>แต่ละทีมส่งผู้เล่นลงสนามครั้งละ 5 คน และเปลี่ยนตัวผู้เล่นได้ไม่จำกัดจำนวนครั้ง เกมแบ่งออกเป็น 4 ควอเตอร์ โดยมาตรฐานสากล (FIBA) กำหนดควอเตอร์ละ 10 นาที ส่วนลีก NBA ใช้ควอเตอร์ละ 12 นาที</p>
     </div>
-
+ 
     <div class="rule-block">
       <h3>การนับคะแนน</h3>
       <table class="score-table">
@@ -619,7 +624,7 @@
         <tr><td>ยิงลูกโทษ (Free Throw)</td><td>1 คะแนน</td></tr>
       </table>
     </div>
-
+ 
     <div class="rule-block">
       <h3>การทำผิดกติกา (Violation)</h3>
       <div class="card-grid">
@@ -645,7 +650,7 @@
         </div>
       </div>
     </div>
-
+ 
     <div class="rule-block">
       <h3>การฟาวล์ (Foul)</h3>
       <div class="card-grid">
@@ -666,7 +671,7 @@
         </div>
       </div>
     </div>
-
+ 
     <div class="rule-block">
       <h3>ทักษะพื้นฐาน</h3>
       <div class="card-grid">
@@ -693,7 +698,7 @@
       </div>
     </div>
   </section>
-
+ 
   <!-- ============ PAGE 5: ผู้จัดทำ ============ -->
   <section id="page-about" class="page">
     <div class="section-head">
@@ -715,13 +720,12 @@
  
 <footer>เว็บไซต์ให้ความรู้เบื้องต้นเรื่องกีฬาบาสเกตบอล จัดทำเพื่อการศึกษา</footer>
  
-
 <script>
 (function(){
   var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
   var pages = Array.prototype.slice.call(document.querySelectorAll('.page'));
   var ctaButtons = Array.prototype.slice.call(document.querySelectorAll('.hero-actions .btn'));
-
+ 
   function goTo(target){
     tabs.forEach(function(t){
       var active = t.dataset.target === target;
@@ -734,19 +738,19 @@
     window.scrollTo({top:0, behavior:'instant'});
     try{ localStorage.setItem('bb101-page', target); }catch(e){}
   }
-
+ 
   tabs.forEach(function(btn){
     btn.addEventListener('click', function(){ goTo(btn.dataset.target); });
   });
   ctaButtons.forEach(function(btn){
     btn.addEventListener('click', function(){ goTo(btn.dataset.target); });
   });
-
+ 
   try{
     var saved = localStorage.getItem('bb101-page');
     if(saved && document.getElementById('page-' + saved)) goTo(saved);
   }catch(e){}
-
+ 
   var themeBtn = document.getElementById('theme-toggle');
   function applyTheme(t){
     document.documentElement.setAttribute('data-theme', t);
